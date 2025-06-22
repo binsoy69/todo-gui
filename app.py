@@ -3,6 +3,8 @@ from tkinter import messagebox
 import os 
 import json
 
+# To-Do List Application using Tkinter and JSON for persistence
+
 TASKS_FILE = "tasks.json"
 tasks = []
 
@@ -28,15 +30,14 @@ def show_tasks():
         task_row = tk.Frame(task_frame)
         task_row.pack(fill="x", pady=2)
 
-        lbl = tk.Label(task_row, text=task_text, anchor="w", width=30)
+        lbl = tk.Label(task_row, text=task_text, anchor="w", width=25)
         lbl.pack(side="left", padx=5)
 
-        toggle_btn = tk.Button(
-            task_row,
-            text="Toggle",
-            command=lambda i=index: toggle_task(i)
-        )
+        toggle_btn = tk.Button(task_row, text="Toggle", width=7, font=("Helvetica", 9), bg="#97ffa5", command=lambda i=index: toggle_task(i))
         toggle_btn.pack(side="right", padx=5)
+
+        delete_btn = tk.Button(task_row, text="Delete", width=7, font=("Helvetica", 9), bg="#ffcccc", command=lambda i=index: delete_task(i))
+        delete_btn.pack(side="right", padx=5)
 
 
 def add_task():
@@ -55,6 +56,12 @@ def toggle_task(index):
     save_tasks()
     show_tasks()
 
+def delete_task(index):
+    confirm = messagebox.askyesno("Confirm Delete", f"Delete task: {tasks[index]['task']}?")
+    if confirm:
+        tasks.pop(index)
+        save_tasks()
+        show_tasks()
 
 
 # GUI setup
@@ -76,7 +83,7 @@ task_frame.pack(pady=10)
 entry = tk.Entry(root, width=30, font=("Helvetica", 12))
 entry.pack(pady=5)
 
-add_button = tk.Button(root, text="Add Task", width=15, command=add_task, font=("Helvetica", 10))
+add_button = tk.Button(root, text="Add Task", width=15, command=add_task, font=("Helvetica", 10), bg="#5dbeff")
 add_button.pack(pady=5)
 load_tasks()
 show_tasks()
