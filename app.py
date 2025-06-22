@@ -21,12 +21,43 @@ def save_tasks():
 def show_tasks():
     for widget in task_frame.winfo_children():
         widget.destroy()
+
     for index, task in enumerate(tasks):
-        status = "✅ " if task["completed"] else "❌ "
-        lbl = tk.Label(task_frame, text=f"{index+1}. {status}{task['task']}", anchor="w", justify="left")
-        lbl.pack(fill="both", pady=2)
+        task_text = f"{index + 1}. {'✅' if task['completed'] else '❌'} {task['task']}"
+
+        task_row = tk.Frame(task_frame)
+        task_row.pack(fill="x", pady=2)
+
+        lbl = tk.Label(task_row, text=task_text, anchor="w", width=30)
+        lbl.pack(side="left", padx=5)
+
+        toggle_btn = tk.Button(
+            task_row,
+            text="Toggle",
+            command=lambda i=index: toggle_task(i)
+        )
+        toggle_btn.pack(side="right", padx=5)
 
 
+def add_task():
+    task_text = entry.get().strip()
+    if task_text == "":
+        messagebox.showwarning("Input Error", "Task cannot be empty.")
+        return
+
+    tasks.append({"task": task_text, "completed": False})
+    save_tasks()
+    entry.delete(0, tk.END)
+    show_tasks()
+
+def toggle_task(index):
+    tasks[index]["completed"] = not tasks[index]["completed"]
+    save_tasks()
+    show_tasks()
+
+
+
+# GUI setup
 root = tk.Tk()
 root.title("To-Do List")
 root.geometry("400x500")
@@ -45,7 +76,7 @@ task_frame.pack(pady=10)
 entry = tk.Entry(root, width=30, font=("Helvetica", 12))
 entry.pack(pady=5)
 
-add_button = tk.Button(root, text="Add Task", width=15)
+add_button = tk.Button(root, text="Add Task", width=15, command=add_task, font=("Helvetica", 10))
 add_button.pack(pady=5)
 load_tasks()
 show_tasks()

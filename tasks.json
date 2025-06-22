@@ -1,14 +1,22 @@
 [
   {
     "task": "sample",
-    "completed": false
+    "completed": true
   },
   {
     "task": "workout",
-    "completed": false
+    "completed": true
   },
   {
     "task": "sample 1",
+    "completed": true
+  },
+  {
+    "task": "workout",
+    "completed": true
+  },
+  {
+    "task": "sample",
     "completed": true
   }
 ]
