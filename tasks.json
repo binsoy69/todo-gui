@@ -1,0 +1,14 @@
+[
+  {
+    "task": "sample",
+    "completed": false
+  },
+  {
+    "task": "workout",
+    "completed": false
+  },
+  {
+    "task": "sample 1",
+    "completed": true
+  }
+]
